@@ -7,17 +7,35 @@ namespace PizzaBox.Domain.Models
   {
     public List<Pizza> Pizzas { get; set; }
     public DateTime DateOrdered { get; set; }
+    public double Price { get; set; }
 
-    public void CreatePizza()
+
+
+    //methods
+    public void AddPizzaToOrder(List<Topping> toppings, Crust crust, Size size)
     {
-      Pizzas.Add(new Pizza());
+      Pizzas.Add(new Pizza(toppings, crust, size));
     }
 
-    public double TotalPrice()
+    public void TotalPrice()
     {
-      //add up each pizza price duh
-      return 0;
+      double OrderPrice = 0;
+      foreach (var pizza in Pizzas)
+      {
+        OrderPrice += pizza.ComputePricePizza(pizza);
+      }
+      
+      Price = OrderPrice;
+      return;
     }
+
+    //constructors
+    public Order()
+    {
+      Pizzas = new List<Pizza>();
+    }
+
+
 
   }
 }

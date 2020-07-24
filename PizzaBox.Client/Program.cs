@@ -17,8 +17,15 @@ namespace PizzaBox.Client
       Console.WriteLine("Welcome to Pizza Time!");
      
       //code to determine if user or store
+      do
+      {
+      user.PrintUserStartMenu();
 
-      user.UserStartMenu();
+      int select;
+      int.TryParse(Console.ReadLine(), out select);
+      user.UserMenuSelectionHander(select);
+      
+      } while(true);
       
     }
 

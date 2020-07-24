@@ -7,11 +7,28 @@ namespace PizzaBox.Domain.Models
     public List<Topping> Toppings { get; set; }
     public Crust Crust { get; set; }
     public Size Size { get; set; }
+    public double Price { get; set; }
 
-    public double ComputePricePizza()
+
+
+
+    //methods
+    public double ComputePricePizza(Pizza pizza)
     {
-      //
-      return 0;
+      double PizzaPrice = 0;
+      PizzaPrice += pizza.Crust.CrustCompute(pizza.Crust);
+      PizzaPrice += pizza.Size.SizeCompute(pizza.Size);
+
+      pizza.Price = PizzaPrice;
+      return PizzaPrice;
+    }
+
+    //constructors
+    public Pizza(List<Topping> toppings, Crust crust, Size size)
+    {
+      Crust = crust;
+      Size = size;
+      Toppings.AddRange(toppings);
     }
   }
 }
