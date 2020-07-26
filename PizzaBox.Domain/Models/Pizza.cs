@@ -18,11 +18,15 @@ namespace PizzaBox.Domain.Models
       double PizzaPrice = 0;
       PizzaPrice += pizza.Crust.CrustCompute(pizza.Crust);
       PizzaPrice += pizza.Size.SizeCompute(pizza.Size);
+      foreach(var topping in pizza.Toppings)
+      {
+        PizzaPrice += topping.ToppingCompute(topping);
+      }
 
       pizza.Price = PizzaPrice;
       return PizzaPrice;
     }
-
+    
     //constructors
     public Pizza(List<Topping> toppings, Crust crust, Size size)
     {
@@ -30,5 +34,6 @@ namespace PizzaBox.Domain.Models
       Size = size;
       Toppings.AddRange(toppings);
     }
+    
   }
 }

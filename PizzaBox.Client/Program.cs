@@ -15,7 +15,7 @@ namespace PizzaBox.Client
       var user = new User();
       //var store = new Store();
       Console.WriteLine("Welcome to Pizza Time!");
-     
+      var loop = true;
       //code to determine if user or store
       do
       {
@@ -25,7 +25,7 @@ namespace PizzaBox.Client
       int.TryParse(Console.ReadLine(), out select);
       user.UserMenuSelectionHander(select);
       
-      } while(true);
+      } while(loop);
       
     }
 

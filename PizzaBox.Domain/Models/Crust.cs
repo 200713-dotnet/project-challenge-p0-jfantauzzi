@@ -2,31 +2,39 @@ namespace PizzaBox.Domain.Models
 {
   public class Crust
   {
-    public string type { get; set; } //options normal, stuffed, deepdish
+    public string option { get; set; } //options normal, stuffed, deepdish
 
 
-    //constructors
-    public Crust()
-    {
 
-    } 
     //methods
     public double CrustCompute(Crust crust)
     {
-      if (crust.type == "normal")
+      if (crust.option == "normal")
       {
         return 1.5;
       }
-      else if (crust.type == "stuffed")
+      else if (crust.option == "stuffed")
       {
         return 2.5;
       }
-      else if (crust.type == "deepdish")
+      else if (crust.option == "deepdish")
       {
         return 3;
       }
       else
         return 0;
     }
+
+    //constructors
+    public Crust(string op)
+    {
+      option = op;
+    }
+
+    public Crust()
+    {
+      option = "";
+    }
+    
   }
 }

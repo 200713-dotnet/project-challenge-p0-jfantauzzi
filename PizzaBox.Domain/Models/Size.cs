@@ -4,6 +4,7 @@ namespace PizzaBox.Domain.Models
   {
     public string option { get; set; } //options small, medium, large
 
+    //constructor
     public Size()
     {
 
@@ -27,5 +28,12 @@ namespace PizzaBox.Domain.Models
       else
         return 0;
     }
+
+    //constructors
+    public Size(string op)
+    {
+      option = op;
+    }
+
   }
 }

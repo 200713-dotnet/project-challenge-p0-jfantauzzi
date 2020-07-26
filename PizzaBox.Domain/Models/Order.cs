@@ -24,10 +24,34 @@ namespace PizzaBox.Domain.Models
       {
         OrderPrice += pizza.ComputePricePizza(pizza);
       }
-      
+
       Price = OrderPrice;
       return;
     }
+
+    /*public void OrderCreation()
+    {
+      var orderingLoop = true;
+      do
+      {
+
+        Console.WriteLine("1: Standard Cheese");
+        Console.WriteLine("2: Standard Pepperoni");
+        Console.WriteLine("3: The Pizza Timer");
+        Console.WriteLine("4: Custom Pizza\n");
+        Console.WriteLine("Input: ");
+        int select;
+        int.TryParse(Console.ReadLine(), out select);
+
+        switch(select)
+        {
+          case 1:
+            currentOrder.AddPizzaToOrder()
+        }
+
+      } while (orderingLoop)
+    }*/
+
 
     //constructors
     public Order()
