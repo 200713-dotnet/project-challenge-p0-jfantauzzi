@@ -17,6 +17,11 @@ namespace PizzaBox.Domain.Models
       Pizzas.Add(new Pizza(toppings, crust, size));
     }
 
+    public void AddPizza(Pizza pizza)
+    {
+      Pizzas.Add(pizza);
+    }
+
     public void TotalPrice()
     {
       double OrderPrice = 0;

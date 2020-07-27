@@ -34,6 +34,6 @@ namespace PizzaBox.Domain.Models
       Size = size;
       Toppings.AddRange(toppings);
     }
-    
+
   }
 }

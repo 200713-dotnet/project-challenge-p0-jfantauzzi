@@ -21,6 +21,7 @@ namespace PizzaBox.Domain.Models
     }
     public void UserMenuSelectionHander(int input) //main menu for users
     {
+
       switch (input)
       {
         case 1:
@@ -33,7 +34,9 @@ namespace PizzaBox.Domain.Models
           Console.WriteLine("Under Construction! Please try another option.");
           break;
         case 4:
+          Menu.IsLoop = false;
           Console.WriteLine("Goodbye!");
+
           break;
       }
     }
@@ -56,8 +59,15 @@ namespace PizzaBox.Domain.Models
         switch (select)
         {
           case 1: //creates/adds to current order a pizza object with toppings(cheese), normal crust, medium size
-            List<Topping> SCtoppings = new List<Topping> {new Topping("cheese")};
-            currentOrder.AddPizzaToOrder(SCtoppings, new Crust("normal"), new Size("medium"));
+
+
+            List<Topping> SCtoppings = new List<Topping> { new Topping("cheese") };
+            Pizza SCpizza = new Pizza(SCtoppings, new Crust("normal"), new Size("medium"));
+            currentOrder.AddPizza(SCpizza);
+
+
+
+            // currentOrder.AddPizzaToOrder(SCtoppings, new Crust("normal"), new Size("medium"));
             Console.WriteLine("Standard Cheese added to your order.\n");
             break;
 
@@ -81,7 +91,7 @@ namespace PizzaBox.Domain.Models
             Size CUSsize = new Size("");
 
             //Picking size
-            Console.WriteLine("Pick your Size!\n");
+            Console.WriteLine("Pick your Size!");
             Console.WriteLine("1. Small");
             Console.WriteLine("2. Medium");
             Console.WriteLine("3. Large\n");
@@ -105,7 +115,7 @@ namespace PizzaBox.Domain.Models
             }
 
             //Picking crust
-            Console.WriteLine("Pick the type of Crust you'd like!\n");
+            Console.WriteLine("Pick the type of Crust you'd like!");
             Console.WriteLine("1. Normal");
             Console.WriteLine("2. Stuffed");
             Console.WriteLine("3. Deepdish\n");
@@ -128,11 +138,12 @@ namespace PizzaBox.Domain.Models
                 break;
             }
 
-          //Picking Toppings
-            Console.WriteLine("Pick the type of Crust you'd like!\n");
-            Console.WriteLine("1. Normal");
-            Console.WriteLine("2. Stuffed");
-            Console.WriteLine("3. Deepdish\n");
+            //Picking Toppings
+            Console.WriteLine("Add your Toppings!");
+            Console.WriteLine("1. Add Cheese.");
+            Console.WriteLine("2. Add Pepperoni.");
+            Console.WriteLine("3. Add Peppers.");
+            Console.WriteLine("3. Add Onions.\n");
             int toppingPick;
             int.TryParse(Console.ReadLine(), out toppingPick);
 

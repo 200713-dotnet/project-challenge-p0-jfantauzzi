@@ -37,5 +37,10 @@ namespace PizzaBox.Domain.Models
       option = op;
     }
 
+    public Topping()
+    {
+      option = "";
+    }
+
   }
 }

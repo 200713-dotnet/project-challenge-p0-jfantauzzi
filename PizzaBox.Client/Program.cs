@@ -13,9 +13,9 @@ namespace PizzaBox.Client
     private static void Welcome()
     { 
       var user = new User();
+      Menu.IsLoop = true;
       //var store = new Store();
       Console.WriteLine("Welcome to Pizza Time!");
-      var loop = true;
       //code to determine if user or store
       do
       {
@@ -25,7 +25,7 @@ namespace PizzaBox.Client
       int.TryParse(Console.ReadLine(), out select);
       user.UserMenuSelectionHander(select);
       
-      } while(loop);
+      } while(Menu.IsLoop);
       
     }
 
