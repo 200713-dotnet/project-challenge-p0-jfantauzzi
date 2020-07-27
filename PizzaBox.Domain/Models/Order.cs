@@ -12,17 +12,33 @@ namespace PizzaBox.Domain.Models
 
 
     //methods
-    public void AddPizzaToOrder(List<Topping> toppings, Crust crust, Size size)
+    public void AddPizzaToOrder(List<Topping> toppings, Crust crust, Size size, string name)
     {
-      Pizzas.Add(new Pizza(toppings, crust, size));
+      Pizzas.Add(new Pizza(toppings, crust, size, name));
     }
 
-    public void AddPizza(Pizza pizza)
+    public void PrintOrder(Order or)
     {
-      Pizzas.Add(pizza);
+      Console.WriteLine("\nYour order:");
+      foreach (var p in or.Pizzas)
+      {
+        Console.WriteLine($"{p.Name} - {p.ComputePricePizza(p)}");
+        if (p.Name == "Custom Pizza")
+        {
+          Console.WriteLine($" {p.Crust.option}");
+          Console.WriteLine($" {p.Size.option}");
+          foreach(var t in p.Toppings)
+          {
+            System.Console.WriteLine($" {t.option}");
+          }
+        
+        }
+      }
+      System.Console.WriteLine($"Your Order Total - {or.TotalPrice()}");
+
     }
 
-    public void TotalPrice()
+    public double TotalPrice()
     {
       double OrderPrice = 0;
       foreach (var pizza in Pizzas)
@@ -31,7 +47,7 @@ namespace PizzaBox.Domain.Models
       }
 
       Price = OrderPrice;
-      return;
+      return OrderPrice;
     }
 
     /*public void OrderCreation()
@@ -59,6 +75,7 @@ namespace PizzaBox.Domain.Models
 
 
     //constructors
+
     public Order()
     {
       Pizzas = new List<Pizza>();

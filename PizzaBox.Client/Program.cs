@@ -3,30 +3,48 @@ using PizzaBox.Domain.Models;
 
 namespace PizzaBox.Client
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Welcome();
-        }
+
+      Welcome();
+
+      /*  creating and reading pizza
+      var pr = new PizzaRepository();
+      var pizza = new Pizza()
+      {
+        Name = "cheesy pizza",
+        Crust = new Crust() { option = "deepdish"},
+        Size = new Size() { option = "medium"},
+        Toppings = new List<Topping> { new Topping("cheese")}
+      }
+      pr.Create(pizza);
+      */
+
+    }
 
     private static void Welcome()
-    { 
-      var user = new User();
-      Menu.IsLoop = true;
-      //var store = new Store();
+    {
       Console.WriteLine("Welcome to Pizza Time!");
+
       //code to determine if user or store
+
+      var user = new User();
+      //var store = new Store();
+
+      //Main Menu Loop
+      Menu.IsLoop = true;
       do
       {
-      user.PrintUserStartMenu();
 
-      int select;
-      int.TryParse(Console.ReadLine(), out select);
-      user.UserMenuSelectionHander(select);
-      
-      } while(Menu.IsLoop);
-      
+        user.PrintUserStartMenu();
+        int select;
+        int.TryParse(Console.ReadLine(), out select);
+        user.UserMenuSelectionHander(select);
+
+      } while (Menu.IsLoop);
+
     }
 
   }

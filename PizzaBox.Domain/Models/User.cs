@@ -15,7 +15,7 @@ namespace PizzaBox.Domain.Models
       Console.WriteLine($"Welcome {Name}!\n");
       Console.WriteLine("1: Make an Order");
       Console.WriteLine("2: View Order History");
-      Console.WriteLine("3: Set Store Location");
+      Console.WriteLine("3: Set Store Location"); //make have filemanager functions for both stores
       Console.WriteLine("4: Exit Application\n");
       Console.WriteLine("Input: ");
     }
@@ -28,7 +28,9 @@ namespace PizzaBox.Domain.Models
           OrderCreation();
           break;
         case 2:
-          Console.WriteLine("Under Construction! Please try another option.");
+          var fmr = new FileManager();
+          var or = new Order();
+          or.PrintOrder(fmr.Read());
           break;
         case 3:
           Console.WriteLine("Under Construction! Please try another option.");
@@ -51,7 +53,8 @@ namespace PizzaBox.Domain.Models
         Console.WriteLine("1: Standard Cheese");
         Console.WriteLine("2: The Deep Little");
         Console.WriteLine("3: The Pizza Timer");
-        Console.WriteLine("4: Custom Pizza\n");
+        Console.WriteLine("4: Add a Custom Pizza");
+        System.Console.WriteLine("5. Finish Order\n");
         Console.WriteLine("Input: ");
         int select;
         int.TryParse(Console.ReadLine(), out select);
@@ -62,24 +65,19 @@ namespace PizzaBox.Domain.Models
 
 
             List<Topping> SCtoppings = new List<Topping> { new Topping("cheese") };
-            Pizza SCpizza = new Pizza(SCtoppings, new Crust("normal"), new Size("medium"));
-            currentOrder.AddPizza(SCpizza);
-
-
-
-            // currentOrder.AddPizzaToOrder(SCtoppings, new Crust("normal"), new Size("medium"));
+            currentOrder.AddPizzaToOrder(SCtoppings, new Crust("normal"), new Size("medium"), "Standard Cheese");
             Console.WriteLine("Standard Cheese added to your order.\n");
             break;
 
           case 2: //creates/adds to current order a pizza object with toppings(cheese, pepperoni), deepdish crust, small size
-            List<Topping> DEtoppings = new List<Topping> { new Topping("cheese"), new Topping("pepperoni") };
-            currentOrder.AddPizzaToOrder(DEtoppings, new Crust("deepdish"), new Size("small"));
+            List<Topping> DLtoppings = new List<Topping> { new Topping("cheese"), new Topping("pepperoni") };
+            currentOrder.AddPizzaToOrder(DLtoppings, new Crust("deepdish"), new Size("small"), "Deep Little");
             Console.WriteLine("Standard Pepperoni added to your order.\n");
             break;
 
           case 3: //creates/adds to current order a pizza with many toppings(cheese, sausage, peppers, onions), stuffed crust, large size
             List<Topping> PTtoppings = new List<Topping> { new Topping("cheese"), new Topping("sausage"), new Topping("peppers"), new Topping("onions") };
-            currentOrder.AddPizzaToOrder(PTtoppings, new Crust("stuffed"), new Size("large"));
+            currentOrder.AddPizzaToOrder(PTtoppings, new Crust("stuffed"), new Size("large"), "Pizza Timer");
             Console.WriteLine("Pizza Timer added to your order.\n");
             break;
 
@@ -137,21 +135,61 @@ namespace PizzaBox.Domain.Models
                 System.Console.WriteLine("That's not an option.");
                 break;
             }
-
+            
             //Picking Toppings
-            Console.WriteLine("Add your Toppings!");
-            Console.WriteLine("1. Add Cheese.");
-            Console.WriteLine("2. Add Pepperoni.");
-            Console.WriteLine("3. Add Peppers.");
-            Console.WriteLine("3. Add Onions.\n");
-            int toppingPick;
-            int.TryParse(Console.ReadLine(), out toppingPick);
+            bool toppingLoop = true;
+            var toppingCount = 0; //going to limit toppings to 5
+            do
+            {
 
+              Console.WriteLine("Add your Toppings! Select 1-4 to add a topping. Select 5 when you're done.");
+              Console.WriteLine("1. Add Cheese.");
+              Console.WriteLine("2. Add Pepperoni.");
+              Console.WriteLine("3. Add Peppers.");
+              Console.WriteLine("4. Add Onions.");
+              System.Console.WriteLine("5. I'm done!\n");
 
+              int toppingPick;
+              int.TryParse(Console.ReadLine(), out toppingPick);
+              
+              switch (toppingPick)
+              {
+                case 1:
+                  CUStoppings.Add(new Topping("cheese"));
+                  break;
+                case 2:
+                  CUStoppings.Add(new Topping("pepperoni"));
+                  break;
+                case 3:
+                  CUStoppings.Add(new Topping("peppers"));
+                  break;
+                case 4:
+                  CUStoppings.Add(new Topping("onions"));
+                  break;
+                case 5:
+                  toppingLoop = false;
+                  break;
+                default:
+                  Console.WriteLine("Not an option.");
+                  break;
+              }
+            } while (toppingLoop);
+
+            //creating pizza, add to order
+            currentOrder.AddPizzaToOrder(CUStoppings, CUScrust, CUSsize, "Custom Pizza");
+            break;
+
+          case 5:
+            System.Console.WriteLine("Finishing up your Order.");
+            var fmw = new FileManager();
+            fmw.Write(currentOrder);
+            orderingLoop = false;
             break;
         }
 
       } while (orderingLoop);
+
+        currentOrder.PrintOrder(currentOrder);
     }
 
   }
