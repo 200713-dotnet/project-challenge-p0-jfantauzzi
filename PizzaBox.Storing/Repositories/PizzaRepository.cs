@@ -11,6 +11,7 @@ namespace PizzaBox.Storing.Repository
     public void Create(domain.Pizza pizza)
     {
       var newPizza = new Pizza(); //gonna be storing's pizza after ef scaffold
+      var topping = new PizzaTopping();
 
       newPizza.Crust = new Crust() { option = pizza.Crust.option };
       newPizza.Size = new Size() { option = pizza.Size.option };
@@ -20,6 +21,7 @@ namespace PizzaBox.Storing.Repository
       //newPizza.UserModified = Identity.Hash;
 
       _db.Pizza.Add(newPizza); //git add
+      _db.PizzaTopping.Add(topping);
       _db.SaveChanges(); //git commit
     }
 

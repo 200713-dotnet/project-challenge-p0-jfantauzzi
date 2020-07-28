@@ -22,6 +22,7 @@ namespace PizzaBox.Domain.Models
       Console.WriteLine("\nYour order:");
       foreach (var p in or.Pizzas)
       {
+
         Console.WriteLine($"{p.Name} - {p.ComputePricePizza(p)}");
         if (p.Name == "Custom Pizza")
         {
@@ -29,14 +30,15 @@ namespace PizzaBox.Domain.Models
           Console.WriteLine($" {p.Size.option}");
           foreach(var t in p.Toppings)
           {
-            System.Console.WriteLine($" {t.option}");
+            System.Console.WriteLine($" {t.option} - {t.ToppingCompute(t)}");
           }
         
         }
       }
-      System.Console.WriteLine($"Your Order Total - {or.TotalPrice()}");
-
+      System.Console.WriteLine($"Order Total - {or.TotalPrice()}\n");
     }
+
+    //public void PrintHistory();
 
     public double TotalPrice()
     {

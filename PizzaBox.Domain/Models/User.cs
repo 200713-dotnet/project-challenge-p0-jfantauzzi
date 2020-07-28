@@ -7,43 +7,52 @@ namespace PizzaBox.Domain.Models
   {
     public List<Order> Orders { get; set; }
     // public Name Name { get; set; }
-    public string Name { get; set; }
+    public static string UserName { get; set; }
 
     //Methods
     public void PrintUserStartMenu()
     {
-      Console.WriteLine($"Welcome {Name}!\n");
+      Console.WriteLine($"Welcome {UserName}!\n");
       Console.WriteLine("1: Make an Order");
       Console.WriteLine("2: View Order History");
-      Console.WriteLine("3: Set Store Location"); //make have filemanager functions for both stores
+      Console.WriteLine("3: Select Location.");
       Console.WriteLine("4: Exit Application\n");
       Console.WriteLine("Input: ");
     }
-    public void UserMenuSelectionHander(int input) //main menu for users
+
+    public void UserMenuSelectionHander(int input, Store st) //main menu for users
     {
 
       switch (input)
       {
         case 1:
-          OrderCreation();
+          OrderCreation(st);
           break;
         case 2:
           var fmr = new FileManager();
           var or = new Order();
-          or.PrintOrder(fmr.Read());
+          //or.PrintHistory();
+          or.PrintOrder(fmr.Read(st.ReadLocation(), UserName));
           break;
         case 3:
-          Console.WriteLine("Under Construction! Please try another option.");
+          st.SetLocation();
           break;
         case 4:
           Menu.IsLoop = false;
           Console.WriteLine("Goodbye!");
-
+          break;
+        default:
+          System.Console.WriteLine("Invalid Option.\n");
           break;
       }
     }
 
-    public void OrderCreation() //creates order
+    public void SetUserName(string str)
+    {
+      UserName = str;
+    }
+
+    public void OrderCreation(Store st) //creates order
     {
       Order currentOrder = new Order();
       var orderingLoop = true;
@@ -135,7 +144,7 @@ namespace PizzaBox.Domain.Models
                 System.Console.WriteLine("That's not an option.");
                 break;
             }
-            
+
             //Picking Toppings
             bool toppingLoop = true;
             var toppingCount = 0; //going to limit toppings to 5
@@ -151,7 +160,7 @@ namespace PizzaBox.Domain.Models
 
               int toppingPick;
               int.TryParse(Console.ReadLine(), out toppingPick);
-              
+
               switch (toppingPick)
               {
                 case 1:
@@ -182,14 +191,14 @@ namespace PizzaBox.Domain.Models
           case 5:
             System.Console.WriteLine("Finishing up your Order.");
             var fmw = new FileManager();
-            fmw.Write(currentOrder);
+            fmw.Write(currentOrder, st.ReadLocation(), UserName);
             orderingLoop = false;
             break;
         }
 
       } while (orderingLoop);
 
-        currentOrder.PrintOrder(currentOrder);
+      currentOrder.PrintOrder(currentOrder);
     }
 
   }

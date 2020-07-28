@@ -53,13 +53,27 @@ create table Pizza.PizzaTopping --Junction table (solves issue of only being abl
   PizzaToppingId int not null identity(1,1),
   PizzaId int not null,
   ToppingId int not null,
-  Active bit not null
+  Active bit not null,
   constraint PK_PizzaToppingId primary key (PizzaTopping),
   constraint PizzaId foreign key references Pizza.Pizza(PizzaId),
   constraint ToppingId foreign key references Pizza.Topping(ToppingId)
 );
 go
 
+--User Schema
+create schema Users;
+go
+
+create table Users.Users 
+(
+  UserId int not null identity(1,1),
+  [username] nvarchar(10) not null,
+  [password] nvarchar(10) not null,
+  Active bit not null
+);
+
+
+go
 
 --Order Schema
 create schema Orders;
