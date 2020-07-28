@@ -40,11 +40,12 @@ namespace PizzaBox.Domain.Models
 
     public void PrintStoreStartMenu()
     {
-      System.Console.WriteLine($"Welcome {StoreName} Admin!\n");
-      System.Console.WriteLine("Select an Option:");
-      System.Console.WriteLine("1. View Order History");
-      System.Console.WriteLine("2. View Sales");
-      System.Console.WriteLine("3. Exit Application");
+      Console.WriteLine($"\nWelcome {StoreName} Admin!\n");
+      Console.WriteLine("Select an Option:");
+      Console.WriteLine("1. View Order History");
+      Console.WriteLine("2. View Sales");
+      Console.WriteLine("3. Exit Application");
+      Console.WriteLine("Input: ");
     }
 
     public void StoreMenuSelectionHandler(int input, User us)
@@ -54,11 +55,48 @@ namespace PizzaBox.Domain.Models
         case 1:
           var fmr = new FileManager();
           var or = new Order();
-          //or.PrintHistory();
-          or.PrintOrder(fmr.Read(ReadLocation(), us.ReadUserName()));
+          var co = new Counter();
+          try
+          {
+            co = fmr.CounterRead();
+            Menu.UCounter = co.counter;
+            for (int i = 0; i < Menu.UCounter; i++)
+            {
+              or.PrintOrder(fmr.Read(StoreName, fmr.UserNameRead(i)));
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Console.WriteLine("Looks like no one has ordered from you yet");
+          }
+
+
+
+          //or.PrintOrder(fmr.Read(StoreName, us.ReadUserName()));
           break;
         case 2:
-          System.Console.WriteLine("Under Construction! We'll get back to you."); //need a db
+          double Revanue = 0;
+
+          var fms = new FileManager();
+          var ord = new Order();
+          var cou = new Counter();
+          List<Order> ords = new List<Order>();
+          try
+          {
+            co = fms.CounterRead();
+            Menu.UCounter = co.counter;
+
+            for (int i = 0; i < Menu.UCounter; i++)
+            {
+              Revanue += fms.Read(StoreName, fms.UserNameRead(i)).TotalPrice();
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Console.WriteLine("Looks like no one has ordered from you yet");
+          }
+
+          Console.WriteLine($"Revanue: {Revanue}"); //need a db
           break;
         case 3:
           Menu.IsStoreLoop = false;
@@ -69,16 +107,16 @@ namespace PizzaBox.Domain.Models
           break;
       }
 
-  }
+    }
 
-      public Order CreateOrder()
-      {
-        return new Order();
-      }
+    public Order CreateOrder()
+    {
+      return new Order();
+    }
 
-      public Store()
-      {
-        StoreName = "NY";
-      }
+    public Store()
+    {
+      StoreName = "NY";
     }
   }
+}

@@ -39,7 +39,7 @@ namespace PizzaBox.Domain.Models
           break;
         case 4:
           Menu.IsUserLoop = false;
-          Console.WriteLine("Goodbye!");
+          Console.WriteLine("Goodbye! Exiting Application...");
           break;
         default:
           System.Console.WriteLine("Invalid Option.\n");

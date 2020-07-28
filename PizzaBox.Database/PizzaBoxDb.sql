@@ -28,7 +28,6 @@ create table Pizza.Crust
   [option] nvarchar(100) not null,
   Active bit not null,
   constraint PK_CrustId primary key (CrustId),
-  constraint Active default 1
 );
 
 create table Pizza.Size
@@ -54,7 +53,6 @@ create table Pizza.PizzaTopping --Junction table (solves issue of only being abl
   PizzaId int not null,
   ToppingId int not null,
   Active bit not null,
-  constraint PK_PizzaToppingId primary key (PizzaTopping),
   constraint PizzaId foreign key references Pizza.Pizza(PizzaId),
   constraint ToppingId foreign key references Pizza.Topping(ToppingId)
 );

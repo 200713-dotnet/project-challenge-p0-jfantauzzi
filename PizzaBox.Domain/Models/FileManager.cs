@@ -35,5 +35,50 @@ namespace PizzaBox.Domain.Models
       xml.Serialize(writer, order);
     }
 
+  //storing usernames
+    public void WriteUName(string uname, int counter)
+    {
+      _path = $"data/usernames/{counter}.xml";
+      var writer = new StreamWriter(_path);
+      var xml = new XmlSerializer(typeof(string));
+
+      xml.Serialize(writer, uname);
+    }
+
+
+    public string UserNameRead(int counter)
+    { 
+
+      _path = $@"data/usernames/{counter}.xml";
+      
+      var reader = new StreamReader(_path);
+      var xml = new XmlSerializer(typeof(string));
+      
+      return xml.Deserialize(reader) as string;
+      
+    }
+
+    //counter handler
+    public void WriteCounter(Counter counter)
+    {
+      _path = $"data/usernames/counter.xml";
+      var writer = new StreamWriter(_path);
+      var xml = new XmlSerializer(typeof(Counter));
+
+      xml.Serialize(writer, counter);
+    }
+
+    public Counter CounterRead()
+    { 
+
+      _path = $@"data/usernames/counter.xml";
+      
+      var reader = new StreamReader(_path);
+      var xml = new XmlSerializer(typeof(Counter));
+      
+      return xml.Deserialize(reader) as Counter;
+      
+    }
+
   }
 }
