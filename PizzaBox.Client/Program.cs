@@ -31,22 +31,35 @@ namespace PizzaBox.Client
       //code to determine if user or store
 
       var user = new User();
-      System.Console.WriteLine("Enter Username: ");
-      user.SetUserName(Console.ReadLine());
+
       var store = new Store();
       store.SetLocation();
-  
-      //Main Menu Loop
-      Menu.IsLoop = true;
+
+      //Store Menu Loop
+      Menu.IsStoreLoop = true;
+      do{
+
+        store.PrintStoreStartMenu();
+        int select;
+        int.TryParse(Console.ReadLine(), out select);
+        store.StoreMenuSelectionHandler(select, user);
+
+      } while (Menu.IsStoreLoop);
+
+      //Main User Menu Loop
+      Console.WriteLine("Enter Username: ");
+      user.SetUserName(Console.ReadLine());
+
+      Menu.IsUserLoop = true;
       do
       {
 
         user.PrintUserStartMenu();
-        int select;
-        int.TryParse(Console.ReadLine(), out select);
-        user.UserMenuSelectionHander(select, store);
+        int select2;
+        int.TryParse(Console.ReadLine(), out select2);
+        user.UserMenuSelectionHandler(select2, store);
 
-      } while (Menu.IsLoop);
+      } while (Menu.IsUserLoop);
 
     }
 

@@ -72,6 +72,14 @@ create table Users.Users
   Active bit not null
 );
 
+create table Users.Stores
+(
+  StoreId int not null identity(1,1),
+  [storename] nvarchar(10) not null,
+  [password] nvarchar(10) not null,
+  Active bit not null
+);
+
 
 go
 

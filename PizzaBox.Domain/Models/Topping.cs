@@ -28,6 +28,10 @@ namespace PizzaBox.Domain.Models
       {
         return 0.5;
       }
+      else if (topping.option == "extra cheese")
+      {
+        return 0.25;
+      }
       else
         return 0;
     }

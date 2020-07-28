@@ -20,7 +20,7 @@ namespace PizzaBox.Domain.Models
       Console.WriteLine("Input: ");
     }
 
-    public void UserMenuSelectionHander(int input, Store st) //main menu for users
+    public void UserMenuSelectionHandler(int input, Store st) //main menu for users
     {
 
       switch (input)
@@ -38,7 +38,7 @@ namespace PizzaBox.Domain.Models
           st.SetLocation();
           break;
         case 4:
-          Menu.IsLoop = false;
+          Menu.IsUserLoop = false;
           Console.WriteLine("Goodbye!");
           break;
         default:
@@ -50,6 +50,11 @@ namespace PizzaBox.Domain.Models
     public void SetUserName(string str)
     {
       UserName = str;
+    }
+
+    public string ReadUserName()
+    {
+      return UserName;
     }
 
     public void OrderCreation(Store st) //creates order
@@ -93,7 +98,7 @@ namespace PizzaBox.Domain.Models
           case 4: //creating a custom pizza object and adding it to the current order
 
             //initializing toppings list, crust object, size object
-            List<Topping> CUStoppings = new List<Topping>();
+            List<Topping> CUStoppings = new List<Topping>() { new Topping("cheese") };
             Crust CUScrust = new Crust();
             Size CUSsize = new Size("");
 
@@ -150,37 +155,58 @@ namespace PizzaBox.Domain.Models
             var toppingCount = 0; //going to limit toppings to 5
             do
             {
-
-              Console.WriteLine("Add your Toppings! Select 1-4 to add a topping. Select 5 when you're done.");
-              Console.WriteLine("1. Add Cheese.");
-              Console.WriteLine("2. Add Pepperoni.");
-              Console.WriteLine("3. Add Peppers.");
-              Console.WriteLine("4. Add Onions.");
-              System.Console.WriteLine("5. I'm done!\n");
-
-              int toppingPick;
-              int.TryParse(Console.ReadLine(), out toppingPick);
-
-              switch (toppingPick)
+              if (toppingCount < 5)
               {
-                case 1:
-                  CUStoppings.Add(new Topping("cheese"));
-                  break;
-                case 2:
-                  CUStoppings.Add(new Topping("pepperoni"));
-                  break;
-                case 3:
-                  CUStoppings.Add(new Topping("peppers"));
-                  break;
-                case 4:
-                  CUStoppings.Add(new Topping("onions"));
-                  break;
-                case 5:
-                  toppingLoop = false;
-                  break;
-                default:
-                  Console.WriteLine("Not an option.");
-                  break;
+                Console.WriteLine("Add your Toppings! Select 1-6 to add a topping. Select 7 when you're done.");
+                Console.WriteLine("1. Add Extra Cheese.");
+                Console.WriteLine("2. Add Pepperoni.");
+                Console.WriteLine("3. Add Sausage.");
+                Console.WriteLine("4. Add Ham.");
+                Console.WriteLine("5. Add Peppers.");
+                Console.WriteLine("6. Add Onions.");
+                Console.WriteLine("7. I'm done!\n");
+
+                int toppingPick;
+                int.TryParse(Console.ReadLine(), out toppingPick);
+
+                switch (toppingPick)
+                {
+                  case 1:
+                    CUStoppings.Add(new Topping("extra cheese"));
+                    toppingCount += 1;
+                    break;
+                  case 2:
+                    CUStoppings.Add(new Topping("pepperoni"));
+                    toppingCount += 1;
+                    break;
+                  case 3:
+                    CUStoppings.Add(new Topping("sausage"));
+                    toppingCount += 1;
+                    break;
+                  case 4:
+                    CUStoppings.Add(new Topping("ham"));
+                    toppingCount += 1;
+                    break;
+                  case 5:
+                    CUStoppings.Add(new Topping("peppers"));
+                    toppingCount += 1;
+                    break;
+                  case 6:
+                    CUStoppings.Add(new Topping("onions"));
+                    toppingCount += 1;
+                    break;
+                  case 7:
+                    toppingLoop = false;
+                    break;
+                  default:
+                    Console.WriteLine("Not an option.");
+                    break;
+                }
+              }
+              else
+              {
+                toppingLoop = false;
+                System.Console.WriteLine("You've reached the limit of 5 toppings!");
               }
             } while (toppingLoop);
 
@@ -188,7 +214,8 @@ namespace PizzaBox.Domain.Models
             currentOrder.AddPizzaToOrder(CUStoppings, CUScrust, CUSsize, "Custom Pizza");
             break;
 
-          case 5:
+          //Finished order, write it to xml file
+          case 5: 
             System.Console.WriteLine("Finishing up your Order.");
             var fmw = new FileManager();
             fmw.Write(currentOrder, st.ReadLocation(), UserName);
