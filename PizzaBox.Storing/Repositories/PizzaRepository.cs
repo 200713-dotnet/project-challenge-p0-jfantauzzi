@@ -43,12 +43,21 @@ namespace PizzaBox.Storing.Repository
 
     public void Update()
     {
-
+      
     }
 
     public void Delete()
     {
+      var newPizza = new Pizza(); //gonna be storing's pizza after ef scaffold
+      var topping = new PizzaTopping();
 
+      newPizza.Crust = new Crust() { option = pizza.Crust.option };
+      newPizza.Size = new Size() { option = pizza.Size.option };
+      newPizza.Option = pizza.Option;
+
+      _db.Pizza.Delete(newPizza);
+      _db.PizzaTopping.Delete(topping);
+      _db.SaveChanges();
     }
 
   }

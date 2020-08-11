@@ -38,7 +38,7 @@ namespace PizzaBox.Client
       System.Console.WriteLine("\nSelect Log-In: ");
       System.Console.WriteLine("1. Store");
       System.Console.WriteLine("2. User");
-      System.Console.WriteLine("3. Stop Application");
+      System.Console.WriteLine("3. Exit Application");
       System.Console.WriteLine("Input: ");
       int select0;
       int.TryParse(Console.ReadLine(), out select0);
@@ -76,9 +76,15 @@ namespace PizzaBox.Client
           }
 
           //saving username to incremented files
+         // if (store.ReadLocation() == "NY")
+          //{
           fmg.WriteUName(user.ReadUserName(), cou.counter);
           cou.counter += 1;
           fmg.WriteCounter(cou);
+          //}
+         // else if (store.ReadLocation() == "Buff"){
+
+          //}
           Menu.UCounter = cou.counter;
           /* for (int i = 0; i < Menu.UCounter; i++)
            {
@@ -104,6 +110,7 @@ namespace PizzaBox.Client
           break;
 
         case 3:
+          System.Console.WriteLine("Exiting Application...");
           return;
         default:
           System.Console.WriteLine("Invalid Option.");

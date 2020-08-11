@@ -96,7 +96,7 @@ namespace PizzaBox.Domain.Models
             System.Console.WriteLine("Looks like no one has ordered from you yet");
           }
 
-          Console.WriteLine($"Revanue: {Revanue}"); //need a db
+          Console.WriteLine($"Revenue: {Revanue}"); //need a db
           break;
         case 3:
           Menu.IsStoreLoop = false;
